@@ -1,0 +1,22 @@
+---
+jobs:
+  - name: build-docker-image
+    plan:
+      - get: git-repository
+        trigger: true
+
+      - put: docker-image
+        params:
+          build: jamesgoodhouse/test-project
+
+resources:
+  - name: git-repository
+    type: git
+    source:
+      uri: https://github.com/jamesgoodhouse/test-project
+      branch: master
+
+  - name: docker-image
+    type: docker-image
+    source:
+      repository: localhost:5000/test-project
